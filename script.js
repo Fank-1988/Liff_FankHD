@@ -4,7 +4,7 @@
         $('#myFlex').html(message)
         //document.getElementById("myFlex").innerHTML = message;
 
-        liff.init({ liffId: "2007068259-B64weXzO" });  //idLiff
+        liff.init({ liffId: "2007106720-7YGZ4oqz" });  //idLiff
         // liff.id equals to liffId
         liff.ready.then(() => {
           liff
