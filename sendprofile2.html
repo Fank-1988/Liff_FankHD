@@ -1,229 +1,242 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>โปรไฟล์ LINE - Flex Message</title>
-  <script src="https://static.line-scdn.net/liff/edge/2.1/sdk.js"></script>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=0,viewport-fit=cover" />
+  <title>Flex Message Sender</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+  <link href='https://fonts.googleapis.com/css?family=Prompt:400,500,700' rel='stylesheet'>
+  <script src="https://kit.fontawesome.com/ad42651166.js" crossorigin="anonymous"></script>
+  <script src="https://code.jquery.com/jquery-3.7.0.min.js" integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
   <style>
     body {
-      background-color: #f5f5f5;
-      font-family: Arial, sans-serif;
+      background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+      font-family: 'Prompt', sans-serif;
+      min-height: 100vh;
+      color: #e0e0e0;
     }
-    .profile-card {
-      background: white;
-      border-radius: 15px;
+    .container-wrapper {
       padding: 20px;
-      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-      max-width: 400px;
+      max-width: 700px;
       margin: 0 auto;
     }
-    .profile-img {
-      border-radius: 50%;
-      margin: 0 auto;
-      display: block;
-      border: 3px solid #00C300;
+    .flex-card {
+      background: #252526;
+      border-radius: 15px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+      overflow: hidden;
+      border: 1px solid #3c3c3c;
     }
-    .display-name {
-      color: #00C300;
-      margin-top: 15px;
-      word-wrap: break-word;
+    .card-header {
+      background: #1e1e1e;
+      color: #e0e0e0;
+      padding: 15px 20px;
+      border-radius: 15px 15px 0 0;
+      border-bottom: 1px solid #3c3c3c;
     }
-    .info-text {
-      color: #666;
-      margin: 5px 0;
-      word-wrap: break-word;
+    .preview-box {
+      background: #2d2d2d;
+      padding: 15px;
+      border-radius: 10px;
+      margin: 20px;
+      border: 1px solid #404040;
     }
-    .btn-group {
-      display: flex;
-      gap: 10px;
-      justify-content: center;
+    .chatbox {
+      background: #333333;
+      padding: 10px;
+      border-radius: 8px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+      min-height: 150px;
     }
     .btn-primary {
-      background-color: #00C300;
-      border-color: #00C300;
+      background: #4a90e2;
+      border: none;
+      padding: 10px 25px;
+      border-radius: 25px;
+      transition: all 0.3s;
     }
     .btn-primary:hover {
-      background-color: #00A300;
-      border-color: #00A300;
+      background: #357abd;
     }
-    .btn-success {
-      background-color: #0066CC;
-      border-color: #0066CC;
+    .btn-danger {
+      background: #e94e77;
+      border: none;
+      padding: 10px 25px;
+      border-radius: 25px;
+      transition: all 0.3s;
     }
-    .btn-success:hover {
-      background-color: #0052A3;
-      border-color: #0052A3;
+    .btn-danger:hover {
+      background: #d43f66;
+    }
+    .badge {
+      padding: 8px 15px;
+      font-size: 12px;
+      cursor: pointer;
+      transition: all 0.3s;
+      color: white;
+    }
+    .badge.bg-danger {
+      background: #e94e77 !important;
+    }
+    .badge.bg-primary {
+      background: #4a90e2 !important;
+    }
+    .badge:hover {
+      opacity: 0.85;
+    }
+    .form-control {
+      background: #2d2d2d;
+      border: 1px solid #404040;
+      color: #e0e0e0;
+      border-radius: 10px;
+      box-shadow: none;
+    }
+    .form-control:focus {
+      background: #2d2d2d;
+      border-color: #4a90e2;
+      color: #e0e0e0;
+      box-shadow: 0 0 5px rgba(74,144,226,0.3);
+    }
+    .accordion-button {
+      background: #2d2d2d !important;
+      color: #e0e0e0 !important;
+      border-radius: 10px !important;
+      border: 1px solid #404040;
+    }
+    .accordion-button:not(.collapsed) {
+      background: #333333 !important;
+      color: #4a90e2 !important;
+      border-bottom: none;
+    }
+    .accordion-body {
+      background: #2d2d2d;
+      border: 1px solid #404040;
+      border-top: none;
+      border-radius: 0 0 10px 10px;
+    }
+    .footer-text {
+      color: #808080;
+      font-size: 14px;
+    }
+    textarea.form-control {
+      background: #333333;
+      border: none;
+      color: #e0e0e0;
+    }
+    label {
+      color: #b0b0b0;
     }
   </style>
 </head>
 
-<body>
-  <div class="container mt-4 mb-4">
-    <div class="profile-card">
-      <img id="profileImage" src="" alt="Profile Image" class="profile-img" style="width: 120px; height: 120px;">
-      <h2 id="displayName" class="display-name text-center">สวัสดีคุณ:</h2>
-      <p id="userId" class="info-text text-center"></p>
-      <p id="statusMessage" class="info-text text-center"></p>
-      <div class="btn-group mt-3">
-        <button type="button" class="btn btn-primary" onclick="sendMessage()">ส่งโปรไฟล์</button>
-        <button type="button" class="btn btn-success" onclick="shareMessage()">แชร์โปรไฟล์</button>
+<body onload="showFlex()">
+  <div class="container-wrapper mt-4 mb-4">
+    <div class="flex-card">
+      <div class="card-header">
+        <h2 class="mb-0 text-center">Flex Message Sender</h2>
+      </div>
+      <div class="card-body p-4">
+        <div class="text-center mb-4">
+          <button class="btn btn-danger" onclick="goSimulator()">
+            <i class="fas fa-paint-brush me-2"></i>ออกแบบ Flex Simulator
+          </button>
+        </div>
+
+        <div class="preview-box">
+          <h5 class="mb-3"><i class="fas fa-eye me-2"></i>ตัวอย่าง Flex Message</h5>
+          <div class="chatbox">
+            <div id="flex1"></div>
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label for="altText" class="form-label">Alt Text (สูงสุด 20 ตัวอักษร)</label>
+          <input type="text" class="form-control" maxlength="20" name="altText" id="altText" placeholder="ข้อความสำรอง" required>
+        </div>
+
+        <div class="mb-4">
+          <div class="d-flex gap-2 mb-3">
+            <span class="badge rounded-pill bg-danger" onclick="resetJson()">ล้าง JSON</span>
+            <span class="badge rounded-pill bg-primary" onclick="paste()">วาง JSON</span>
+          </div>
+          <div class="accordion accordion-flush" id="accordionFlushExample">
+            <div class="accordion-item">
+              <h2 class="accordion-header" id="flush-headingOne">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+                  แสดง/ซ่อน JSON Code
+                </button>
+              </h2>
+              <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
+                <div class="accordion-body p-2">
+                  <textarea class="form-control" id="flexjson" name="flexjson" rows="15" required onchange="showFlex()" readonly>{
+  "type": "bubble",
+  "hero": {
+    "type": "image",
+    "url": "https://krubeecomsw.files.wordpress.com/2020/05/unnamed-3.jpg?w=512",
+    "size": "full",
+    "aspectRatio": "20:13",
+    "aspectMode": "cover",
+    "action": {
+      "type": "uri",
+      "uri": "http://linecorp.com/"
+    }
+  },
+  "body": {
+    "type": "box",
+    "layout": "vertical",
+    "contents": [
+      {
+        "type": "text",
+        "text": "ทดสอบส่ง Flex",
+        "weight": "bold",
+        "size": "xl",
+        "align": "center"
+      }
+    ]
+  },
+  "footer": {
+    "type": "box",
+    "layout": "vertical",
+    "spacing": "sm",
+    "contents": [
+      {
+        "type": "button",
+        "style": "primary",
+        "height": "sm",
+        "action": {
+          "type": "uri",
+          "label": "ส่ง Flex",
+          "uri": "https://line.me/R/app/1661515542-7JAnYE4d"
+        }
+      }
+    ],
+    "flex": 0
+  }
+}</textarea>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="d-grid gap-2">
+          <button class="btn btn-primary" id="btnsend" type="button" onclick="sendFlex()">
+            <i class="fas fa-paper-plane me-2"></i>ส่ง Flex Message
+          </button>
+          <button class="btn btn-primary" type="button" id="btnlad" disabled style="display:none;">
+            <span class="spinner-grow spinner-grow-sm me-2" aria-hidden="true"></span>
+            <span role="status">กำลังส่ง Flex...</span>
+          </button>
+        </div>
       </div>
     </div>
+    <p class="text-center mt-3 footer-text">Developed by Teerapong Promwang</p>
   </div>
 
-  <script>
-    let userProfile;
-
-    function initializeLiff(myLiffId) {
-      console.log('Initializing LIFF');
-      liff.init({ liffId: myLiffId })
-        .then(() => {
-          console.log('LIFF initialized');
-          if (liff.isLoggedIn()) {
-            console.log('User is logged in');
-            liff.getProfile()
-              .then(profile => {
-                console.log('Profile retrieved', profile);
-                userProfile = profile;
-                document.getElementById('displayName').textContent = `สวัสดีคุณ ${profile.displayName}`;
-                document.getElementById('userId').textContent = `ID: ${profile.userId}`;
-                document.getElementById('statusMessage').textContent = profile.statusMessage || 'ไม่มีข้อความสถานะ';
-                document.getElementById('profileImage').src = profile.pictureUrl || 'https://via.placeholder.com/120';
-              })
-              .catch(err => {
-                console.error('Error getting profile: ', err);
-              });
-          } else {
-            console.log('User is not logged in, redirecting to login');
-            liff.login();
-          }
-        })
-        .catch(err => {
-          console.error('LIFF Initialization failed ', err);
-        });
-    }
-
-    function sendMessage() {
-      if (!liff.isInClient()) {
-        alert('ฟังก์ชันนี้ใช้งานได้เฉพาะในแอป LINE เท่านั้น');
-        return;
-      }
-      if (userProfile) {
-        const flexMessage = {
-          type: "flex",
-          altText: "ข้อมูลโปรไฟล์",
-          contents: {
-            type: "bubble",
-            hero: {
-              type: "image",
-              url: userProfile.pictureUrl,
-              size: "full",
-              aspectRatio: "1:1",
-              aspectMode: "cover",
-            },
-            body: {
-              type: "box",
-              layout: "vertical",
-              contents: [
-                {
-                  type: "text",
-                  text: userProfile.displayName,
-                  weight: "bold",
-                  size: "xl"
-                },
-                {
-                  type: "text",
-                  text: `ID: ${userProfile.userId}`,
-                  size: "sm",
-                  color: "#999999"
-                },
-                {
-                  type: "text",
-                  text: userProfile.statusMessage || "ไม่มีข้อความสถานะ",
-                  size: "sm",
-                  color: "#999999",
-                  wrap: true
-                }
-              ]
-            }
-          }
-        };
-
-        liff.sendMessages([flexMessage])
-          .then(() => {
-            alert('ส่งโปรไฟล์สำเร็จ!');
-          })
-          .catch((error) => {
-            console.error('Error sending message: ', error);
-            alert('เกิดข้อผิดพลาดในการส่ง: ' + error);
-          });
-      }
-    }
-
-    function shareMessage() {
-      if (userProfile) {
-        const flexMessage = {
-          type: "flex",
-          altText: "ข้อมูลโปรไฟล์",
-          contents: {
-            type: "bubble",
-            hero: {
-              type: "image",
-              url: userProfile.pictureUrl,
-              size: "full",
-              aspectRatio: "1:1",
-              aspectMode: "cover",
-            },
-            body: {
-              type: "box",
-              layout: "vertical",
-              contents: [
-                {
-                  type: "text",
-                  text: userProfile.displayName,
-                  weight: "bold",
-                  size: "xl"
-                },
-                {
-                  type: "text",
-                  text: `ID: ${userProfile.userId}`,
-                  size: "sm",
-                  color: "#999999"
-                },
-                {
-                  type: "text",
-                  text: userProfile.statusMessage || "ไม่มีข้อความสถานะ",
-                  size: "sm",
-                  color: "#999999",
-                  wrap: true
-                }
-              ]
-            }
-          }
-        };
-
-        liff.shareTargetPicker([flexMessage])
-          .then((res) => {
-            if (res) {
-              alert('แชร์โปรไฟล์สำเร็จ!');
-            } else {
-              alert('ยกเลิกการแชร์');
-            }
-          })
-          .catch((error) => {
-            console.error('Error sharing message: ', error);
-            alert('เกิดข้อผิดพลาดในการแชร์: ' + error);
-          });
-      }
-    }
-
-    document.addEventListener('DOMContentLoaded', function () {
-      var myLiffId = '2007106720-7YGZ4oqz'; // แทนที่ด้วย LIFF ID ของคุณ
-      console.log('DOMContentLoaded');
-      initializeLiff(myLiffId);
-    });
-  </script>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script src="script.js"></script>
+  <script src="flex2html.js"></script>
+  <script src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
